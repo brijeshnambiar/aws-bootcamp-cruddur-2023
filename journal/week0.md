@@ -1,10 +1,11 @@
 # Week 0 — Billing and Architecture
 
-## Add SSH keys to GITPOD to open the VSCode Desktop
+## Add SSH keys to GITPOD to open the VSCode Desktop without password
 Generated SSH keys and add the keys to the gitpod config to open the desktop VSCode without a prompt for password. Make sure to save the private key at ~/.ssh/id_ed25519. The copy the contents of the public key - id_ed25519.pub into the ssh keys under user settings https://gitpod.io/user/keys
 ```
 ssh-keygen -t ed25519
 ```
+<img src="assets/Gitpod-SSH.png" width="450" height="380">
 
 ## AWS CLI Installation
 
