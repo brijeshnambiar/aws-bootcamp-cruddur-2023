@@ -55,4 +55,5 @@ gp env AWS_REGION=us-east-1
 ![Conceptual Diagram](assets/Conceptual-Diagram.jpg)
 
 ## Lucid Cruddur Logical Diagram
+![Logical Architectural Diagram](assets/Cruddur-Logical-Diagram.png)
 Here is the link to the [logical diagram](https://lucid.app/lucidchart/bb8ce4de-0bdd-4b22-9486-7b2c93a8e17c/edit?viewport_loc=-2510%2C-172%2C2400%2C2026%2C0_0&invitationId=inv_3ecb8cd9-52f3-439a-a047-9b7bdc34f40d)
