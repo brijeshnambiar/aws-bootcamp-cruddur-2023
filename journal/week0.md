@@ -12,6 +12,7 @@ ssh-keygen -t ed25519
 (IAM Users Console](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/users)
 
 - Create an IAM user - IAMADMIN
+- Enabled MFA and associated Google Authenticator as the MFA device
 - Enable Console access for the user
 - Create a new Admin group and apply `AdminstratorAccess`
 - Create Access key
