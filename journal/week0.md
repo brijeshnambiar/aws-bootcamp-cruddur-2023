@@ -137,6 +137,20 @@ aws budgets create-budget \
     --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
 ```
 
+## EventBridge Hookup with HealthDashboard to SNS
+From the health Dashboard configured the EventBridge to notify using SNS when EC2 has operational issues. Created a SNS topic and subscribed for this event.
+```json
+{
+  "source": ["aws.health"],
+  "detail-type": ["AWS Health Event"],
+  "detail": {
+    "service": ["EC2"],
+    "eventTypeCategory": ["issue"],
+    "eventTypeCode": ["AWS_EC2_OPERATIONAL_ISSUE"]
+  }
+}
+```
+![EventBridge Configuration](assets/EventBridge-HealthDashboard-SNS.png)
 
 ## Conceptual Cruddur Diagram
 
