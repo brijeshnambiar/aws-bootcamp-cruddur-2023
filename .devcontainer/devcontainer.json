@@ -13,8 +13,14 @@
 		"vscode": {
 			"extensions": [
 				"ms-azuretools.vscode-docker",
-				"ms-python.python"
-			]
+				"ms-python.python",
+				"vscodevim.vim"
+			],
+			"settings": {
+				"terminal.integrated.fontSize": 14,
+				"editor.fontSize": 14,
+				"workbench.colorTheme": "Default Dark+ Experimental"
+			}
 		}
 	}
 
