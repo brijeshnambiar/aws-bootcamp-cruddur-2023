@@ -1,0 +1,2 @@
+#! /usr/bin/bash
+createdb cruddur -h localhost -U postgres
