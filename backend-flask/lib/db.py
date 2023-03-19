@@ -1,5 +1,8 @@
 from psycopg_pool import ConnectionPool
 import os
+import sys
+import re
+from flask import current_app as app
 
 class DB:
   def __init__(self):
@@ -9,55 +12,80 @@ class DB:
     connection_pool = os.getenv("CONNECTION_URL")
     self.pool = ConnectionPool(connection_pool)
 
-  def query_commit_returning_id(self,sql,*kwargs):
-    print("SQL Statement - [commit with returning id]...")
+  def print_params(self, params):
+    blue = '\033[94m'
+    no_color = '\033[0m]'
+    print(f'{blue}SQL Params-{no_color}')
+    for key, value in params.items():
+      print(key, ":", value)
+
+  def print_sql(self,title,sql):
+    print("\n")
+    cyan = '\033[96m'
+    no_color = '\033[0m]'
+    print(f'{cyan}SQL STATEMENT-[{title}]----{no_color}')
     print(sql + "\n")
+    
+  def template(self, *args):
+    pathing = list((app.root_path,'db','sql',) + args)
+    pathing[-1] = pathing[-1] + ".sql"
+    template_path = os.path.join(*pathing)
+    print("\n")
+    green = '\033[92m'
+    no_color = '\033[0m]'
+    print(f'{green}Load SQL Template-[{template_path}]----{no_color}')
+    with open(template_path, 'r') as f:
+      template_content = f.read()
+    print (template_content)
+    return template_content
+
+  def query_commit(self,sql,params={}):
+    self.print_sql('commit with returning id',sql)
+    pattern = r"\bRETURNING\b"
+    is_returning_id = re.search(pattern, sql)
     try:
-      conn = self.pool.connection()
-      cur = conn.cursor()
-      cur.execute(sql,kwargs)
-      returning_id = cur.fetchone()[0]
-      conn.commit()
-      return returning_id
+      with self.pool.connection() as conn:
+        cur = conn.cursor()
+        cur.execute(sql,params)
+        if is_returning_id:
+          returning_id = cur.fetchone()[0]
+        conn.commit()
+        if is_returning_id:
+          return returning_id
     except Exception as err:
-      print_sql_err(err)
+      self.print_sql_err(err)
       #conn.rollback()
 
-  def query_commit(self, sql):
-    try:
-      conn = self.pool.connection()
-      cur = conn.cursor()
-      cur.execute(sql)
-      conn.commit()
-    except Exception as err:
-      print_sql_err(err)
-      #conn.rollback()
-
-  def query_array_json(self,sql):
-    print("SQL Statement - [array]...")
+  def query_array_json(self,sql,params={}):
+    self.print_sql('array',sql)
     print(sql + "\n")
     wrapped_sql = self.query_wrap_array(sql)
     with self.pool.connection() as conn:
       with conn.cursor() as cur:
-        cur.execute(wrapped_sql)
+        cur.execute(wrapped_sql,params)
         # this will return a tuple
         # the first field being the data
         json = cur.fetchone()
+        if json == None:
+          return "{}"
         return json[0]
 
-  def query_object_json(self, sql):
-    print("SQL Statement - [object]...")
+  def query_object_json(self, sql,params={}):
+    self.print_sql('json',sql)
+    self.print_params(params)
     print(sql + "\n")
     wrapped_sql = self.query_wrap_object(sql)
     with self.pool.connection() as conn:
       with conn.cursor() as cur:
-        cur.execute(wrapped_sql)
+        cur.execute(wrapped_sql,params)
         # this will return a tuple
         # the first field being the data
         json = cur.fetchone()
-        return json[0]
+        if json == None:
+          "{}"
+        else:
+          return json[0]
   
-
   def query_wrap_object(self,template):
     sql = f"""
     (SELECT COALESCE(row_to_json(object_row),'{{}}'::json) FROM (
@@ -81,7 +109,7 @@ class DB:
     print("\n psycopg ERROR", err, "on line number:", line_num)
     print("psycopg traceback:", traceback, "-- type:", err_type)
 
-    print("\nextensions.Diagnostics:", err.diag)
+    #print("\nextensions.Diagnostics:", err.diag)
 
     print("pgerrors:", err.pgerror)
     print("pgcode:", err.pgcode, "\n")
