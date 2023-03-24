@@ -40,7 +40,7 @@ class DB:
     return template_content
 
   def query_commit(self,sql,params={}):
-    self.print_sql('commit with returning id',sql)
+    self.print_sql('commit with returning id',sql,params)
     pattern = r"\bRETURNING\b"
     is_returning_id = re.search(pattern, sql)
     try:
