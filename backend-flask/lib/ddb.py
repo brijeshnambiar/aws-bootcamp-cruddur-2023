@@ -14,6 +14,7 @@ class Ddb:
       attrs = {}
     dynamodb = boto3.client('dynamodb',**attrs)
     return dynamodb  
+
   def list_message_groups(client,my_user_uuid):
     current_year = datetime.now().year
     table_name = 'cruddur-messages'
@@ -46,3 +47,32 @@ class Ddb:
         'created_at': last_sent_at
       })
     return results 
+
+  def list_messages(client,message_group_uuid):
+    table_name = 'cruddur-messages'
+    current_year = datetime.now().year
+    query_params = {
+      'TableName': table_name,
+      'KeyConditionExpression': 'pk = :pk AND begins_with(sk,:year)',
+      'ScanIndexForward': False,
+      'Limit': 20,
+      'ExpressionAttributeValues': {
+        ':year': {'S': str(current_year) },
+        ':pk': {'S': f"MSG#{message_group_uuid}"}
+      }
+    }
+
+    response = client.query(**query_params)
+    items = response['Items']
+    
+    results = []
+    for item in items:
+      created_at = item['sk']['S']
+      results.append({
+        'uuid': item['message_uuid']['S'],
+        'display_name': item['user_display_name']['S'],
+        'handle': item['user_handle']['S'],
+        'message': item['message']['S'],
+        'created_at': created_at
+      })
+    return results
