@@ -37,6 +37,7 @@ class Ddb:
     items = response['Items']
     
     results = []
+    print("message-group-items=============",items)
     for item in items:
       last_sent_at = item['sk']['S']
       results.append({
@@ -66,6 +67,7 @@ class Ddb:
     items = response['Items']
     
     results = []
+    print("message-items=============",items)
     for item in items:
       created_at = item['sk']['S']
       results.append({
