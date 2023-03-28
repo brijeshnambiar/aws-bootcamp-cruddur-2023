@@ -11,6 +11,7 @@ from services.create_reply import *
 from services.search_activities import *
 from services.message_groups import *
 from services.messages import *
+from services.users_short import *
 
 from services.create_message import *
 from services.show_activity import *
@@ -238,6 +239,11 @@ def data_handle(handle):
     return model['errors'], 422
   else:
     return model['data'], 200
+
+@app.route("/api/users/@<string:handle>/short", methods=['GET'])
+def data_users_short(handle):
+  data = UsersShort.run(handle)
+  return data, 200
 
 @app.route("/api/activities/search", methods=['GET'])
 def data_search():
