@@ -1,7 +1,7 @@
 import './MessageForm.css';
 import React from "react";
 import process from 'process';
-import { useParams } from 'react-router-dom';
+import { json, useParams } from 'react-router-dom';
 
 export default function ActivityForm(props) {
   const [count, setCount] = React.useState(0);
@@ -22,7 +22,7 @@ export default function ActivityForm(props) {
 
       let json = { message: message }
       if (params.handle) {
-        json.user_receiver_handle = params.handle
+        json.handle = params.handle
       } else {
         json.message_group_uuid = params.message_group_uuid
       }

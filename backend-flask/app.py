@@ -175,6 +175,7 @@ def data_create_message():
     message_group_uuid   = request.json.get('message_group_uuid',None)
     user_receiver_handle = request.json.get('handle',None)
     app.logger.debug('authenticated')
+    app.logger.debug(request.json)
     app.logger.debug(claims)
     app.logger.debug(claims['username'])
     if message_group_uuid == None:
