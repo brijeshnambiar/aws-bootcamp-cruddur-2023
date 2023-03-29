@@ -10,7 +10,7 @@ class CreateMessage:
       'errors': None,
       'data': None
     }
-
+    print(mode, message, cognito_user_id, message_group_uuid, user_receiver_handle)
     if (mode == "update"):
       if message_group_uuid == None or len(message_group_uuid) < 1:
         model['errors'] = ['message_group_uuid_blank']
@@ -71,7 +71,7 @@ class CreateMessage:
       elif (mode == "create"):
         data = Ddb.create_message_group(
           client=ddb,
-          message=message, 
+          message=message,
           my_user_uuid=my_user['uuid'],
           my_user_display_name=my_user['display_name'],
           my_user_handle=my_user['handle'],
