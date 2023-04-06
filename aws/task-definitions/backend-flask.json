@@ -44,8 +44,8 @@
           {"name": "OTEL_EXPORTER_OTLP_ENDPOINT", "value": "https://api.honeycomb.io"},
           {"name": "AWS_COGNITO_USER_POOL_ID", "value": "us-east-1_MBcBGNiGO"},
           {"name": "AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "22fbgqindhd3c5jhf7qjtalugo"},
-          {"name": "FRONTEND_URL", "value": "*"},
-          {"name": "BACKEND_URL", "value": "*"},
+          {"name": "FRONTEND_URL", "value": "https://worksmarter.click"},
+          {"name": "BACKEND_URL", "value": "https://api.worksmarter.click"},
           {"name": "AWS_DEFAULT_REGION", "value": "us-east-1"}
         ],
         "secrets": [
