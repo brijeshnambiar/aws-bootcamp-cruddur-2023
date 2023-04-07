@@ -91,7 +91,7 @@ class DB:
         # the first field being the data
         json = cur.fetchone()
         if json == None:
-          "{}"
+          return "{}"
         else:
           return json[0]
   
