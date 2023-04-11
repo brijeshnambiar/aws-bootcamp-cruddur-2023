@@ -1,0 +1,16 @@
+#! /usr/bin/bash
+set -e # stop if it fails at any point
+
+CLUSTER_NAME="cruddur"
+BACKEND_SERVICE_NAME="backend-flask"
+BACKEND_TASK_DEFINITION_FAMILY="backend-flask"
+RDS_INSTANCE="cruddur-db-instance"
+
+echo "STOPPING BACKEND TASK"
+aws ecs update-service \
+--cluster $CLUSTER_NAME \
+--service $BACKEND_SERVICE_NAME \
+--task-definition $BACKEND_TASK_DEFINITION_FAMILY --desired-count 0 --no-cli-pager
+
+echo "STOPPING RDS"
+aws rds stop-db-instance --db-instance-identifier $RDS_INSTANCE --no-cli-pager

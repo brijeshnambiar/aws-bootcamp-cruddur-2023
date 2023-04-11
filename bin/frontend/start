@@ -1,0 +1,12 @@
+#! /usr/bin/bash
+set -e # stop if it fails at any point
+
+CLUSTER_NAME="cruddur"
+FRONTEND_SERVICE_NAME="frontend-react-js"
+FRONTEND_TASK_DEFINITION_FAMILY="frontend-react-js"
+
+echo "STARTING FRONTEND TASK"
+aws ecs update-service \
+--cluster $CLUSTER_NAME \
+--service $FRONTEND_SERVICE_NAME \
+--task-definition $FRONTEND_TASK_DEFINITION_FAMILY --desired-count 1 --no-cli-pager

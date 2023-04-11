@@ -4,10 +4,10 @@ ABS_PATH=$(readlink -f "$0")
 BACKEND_PATH=$(dirname $ABS_PATH)
 BIN_PATH=$(dirname $BACKEND_PATH)
 PROJECT_PATH=$(dirname $BIN_PATH)
-ENVFILE_PATH="$PROJECT_PATH/backend-flask.env"
+ENVFILE_PATH="$PROJECT_PATH/fronend-react-js.env"
 
 docker run --rm \
 --env-file $ENVFILE_PATH \
 --network cruddur-net \
--p 4567:4567 \
--it backend-flask-prod
+-p 3000:30000 \
+-it frontend-react-js-prod
