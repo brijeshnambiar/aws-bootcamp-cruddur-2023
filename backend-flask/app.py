@@ -132,6 +132,7 @@ def data_message_groups():
   access_token = extract_access_token(request.headers)
   try:
     claims = cognito_jwt_token.verify(access_token)
+    app.logger.debug(claims)
     app.logger.debug('authenticated')
     app.logger.debug(claims)
     cognito_user_id = claims['sub']
@@ -141,10 +142,11 @@ def data_message_groups():
     else:
       return model['data'], 200
   except TokenVerifyError as e:
+    app.logger.debug(request.headers)
+    app.logger.debug(claims)
     app.logger.debug(e)
     app.logger.debug('unauthenticated')
     return {}, 401
-
 
 
 
