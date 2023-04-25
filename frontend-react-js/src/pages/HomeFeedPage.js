@@ -8,6 +8,7 @@ import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
 import ReplyForm from '../components/ReplyForm';
 import {checkAuth, getAccessToken} from '../lib/CheckAuth';
+import ProfileInfo from '../components/ProfileInfo';
 
 
 export default function HomeFeedPage() {
@@ -72,7 +73,8 @@ export default function HomeFeedPage() {
         />
         <div className='activity_feed'>
           <div className='activity_feed_heading'>
-            <div className='title'>Home</div>
+            <div className='title'>{profile.display_name}</div>
+            <div class="cruds_count">{profile.cruds_count} Cruds</div>
           </div>
           <ActivityFeed 
             setReplyActivity={setReplyActivity} 
