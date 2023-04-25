@@ -73,8 +73,7 @@ export default function HomeFeedPage() {
         />
         <div className='activity_feed'>
           <div className='activity_feed_heading'>
-            <div className='title'>{profile.display_name}</div>
-            <div class="cruds_count">{profile.cruds_count} Cruds</div>
+          <div className='title'>Home</div>
           </div>
           <ActivityFeed 
             setReplyActivity={setReplyActivity} 
