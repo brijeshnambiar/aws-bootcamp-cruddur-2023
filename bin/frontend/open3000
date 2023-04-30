@@ -1,0 +1,1 @@
+gp preview $(gp url 3000) --external

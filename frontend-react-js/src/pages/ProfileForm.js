@@ -24,7 +24,7 @@ export default function ProfileForm(props) {
       const res = await fetch(backend_url, {
         method: "POST",
         headers: {
-          'Origin': "https://3000-brijeshnamb-awsbootcamp-a9mkqomzlkz.ws-us96.gitpod.io",
+          'Origin': "3000-brijeshnamb-awsbootcamp-h4opny9q7ox.ws-us96b.gitpod.io",
           'Authorization': `Bearer ${access_token}`,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -32,7 +32,8 @@ export default function ProfileForm(props) {
       });
       let data = await res.json();
       if (res.status === 200) {
-        console.log('presigned url:',data)
+          console.log('presigned url:',data)
+          return data.url
       } else {
         console.log(res)
       }
@@ -50,10 +51,11 @@ export default function ProfileForm(props) {
     console.log('file',file, filename, size, type)
     const formData = new FormData()
     formData.append('file', file)
+    presignedurl = await s3uploadkey()
+    console.log(presignedurl)
 
     try {
-      const backend_url = ""
-      const res = await fetch(backend_url, {
+      const res = await fetch(presignedurl, {
         method: "POST",
         body: formData,
         headers: {
@@ -64,6 +66,7 @@ export default function ProfileForm(props) {
       let data = await res.json();
       if (res.status === 200) {
         console.log('presigned url:',data)
+        return data.url
       } else {
         console.log(res)
       }
@@ -132,12 +135,9 @@ export default function ProfileForm(props) {
             </div>
           </div>
           <div className="popup_content">
-            <div className='upload' onClick={s3uploadkey}>
-              Upload Avatar
-            </div>
             <input type="file" name="avatarupload" onChange={s3upload} accept='image/png, image/jpeg'/>
             <div className='upload' onClick={s3upload}>
-              Upload Avatar For Real
+              Upload Avatar
             </div>
             <div className="field display_name">
               <label>Display Name</label>
