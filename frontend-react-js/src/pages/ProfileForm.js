@@ -35,7 +35,7 @@ export default function ProfileForm(props) {
       if (res.status === 200) {
         return data.url
       } else {
-        console.log(res)
+        console.log(data)
       }
     } catch (err) {
       console.log(err);
@@ -52,6 +52,7 @@ export default function ProfileForm(props) {
     const fileparts = filename.split('.')
     const extension = fileparts[fileparts.length-1]
     const presignedurl = await s3uploadkey(extension)
+    console.log(presignedurl)
     try {
       console.log('s3upload')
       const res = await fetch(presignedurl, {
