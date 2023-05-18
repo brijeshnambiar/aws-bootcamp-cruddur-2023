@@ -1,6 +1,6 @@
 import './ProfileHeading.css';
 import EditProfileButton from '../components/EditProfileButton';
-
+import ProfileAvatar from 'components/ProfileAvatar';
 
 export default function ProfileHeading(props) {
     const backgroundImage = 'url("https://assets.worksmarter.click/banners/banner.jpeg")';
@@ -14,6 +14,7 @@ export default function ProfileHeading(props) {
         <div className='title'>{props.display_name}</div>
         <div className='cruds_count'>{props.cruds_count} Cruds</div>
         <div className="banner" style={styles}>
+            <ProfileAvatar id={props.profile.cognito_user_uuid}/>
             <div className='avatar'>
              <img src="https://assets.worksmarter.click/avatars/data.jpeg"></img>
             </div>
